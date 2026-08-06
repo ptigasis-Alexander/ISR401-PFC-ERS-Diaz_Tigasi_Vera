@@ -1,0 +1,631 @@
+% !TeX encoding = UTF-8
+% !TeX program = pdflatex
+\documentclass[11pt,a4paper]{article}
+
+% =========================================================
+% PE4 - Unidad IV - Ingeniería de Requisitos
+% Compilación: pdflatex -> bibtex -> pdflatex -> pdflatex
+% Archivo bibliográfico: referencias_pe4.bib
+% =========================================================
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[provide=*,spanish]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{geometry}
+\geometry{top=2.2cm,bottom=2.2cm,left=2.3cm,right=2.3cm}
+\usepackage{setspace}
+\setstretch{1.08}
+\usepackage{graphicx}
+\graphicspath{{Imagenes_DCF_IR_LATEX/}}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{booktabs,longtable,tabularx,array,multirow}
+\usepackage[table]{xcolor}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{listings}
+\usepackage{csquotes}
+\usepackage{url}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!55!black}
+\usepackage[numbers,sort&compress]{natbib}
+
+\definecolor{uteqblue}{HTML}{003B6F}
+\definecolor{uteqcyan}{HTML}{008FA8}
+\definecolor{lightblue}{HTML}{EAF3F8}
+\definecolor{lightorange}{HTML}{FFF0DD}
+\definecolor{lightred}{HTML}{FCE8E6}
+\definecolor{lightgreen}{HTML}{E6F4EA}
+\definecolor{darkgray}{HTML}{455A64}
+
+\newcommand{\sistema}{Sistema de Gestión Inteligente para un Centro Médico (SICM)}
+\newcommand{\repositorio}{https://github.com/ptigasis-Alexander/MediCita\_ISR401}
+\newcommand{\versioners}{1.1}
+\newcommand{\versionbaseline}{v1.1}
+\newcommand{\fechasesion}{04/08/2026}
+\newcommand{\pendiente}[1]{\colorbox{lightorange}{\parbox{0.94\linewidth}{\textbf{Evidencia pendiente:} #1}}}
+
+\renewcommand{\arraystretch}{1.22}
+\setlength{\tabcolsep}{5pt}
+\setlist[itemize]{leftmargin=1.3em,itemsep=2pt,topsep=3pt}
+\setlist[enumerate]{leftmargin=1.6em,itemsep=3pt,topsep=3pt}
+
+\lstdefinestyle{terminal}{
+	basicstyle=\ttfamily\small,
+	backgroundcolor=\color{black!4},
+	frame=single,
+	rulecolor=\color{black!25},
+	breaklines=true,
+	columns=fullflexible,
+	showstringspaces=false
+}
+
+\begin{document}
+	
+	% ======================= CARÁTULA ========================
+	\begin{titlepage}
+		\centering
+		{\large\bfseries UNIVERSIDAD TÉCNICA ESTATAL DE QUEVEDO\par}
+		\vspace{0.25cm}
+		{\large Facultad de Ciencias de la Computación\par}
+		{\large Carrera de Software (Rediseño)\par}
+		\vspace{.12cm}
+		{\color{uteqblue}\rule{\textwidth}{1.4pt}}\\[0.6cm]
+		{\Huge\bfseries Práctica Experimental PE4\par}
+		\vspace{0.15cm}
+		{\LARGE Validación, gestión de requisitos y herramientas CASE\par}
+		\vspace{0.6cm}
+		{\color{uteqblue}\rule{\textwidth}{1.4pt}}
+		\vspace{0.9cm}
+		
+		\begin{tabularx}{\textwidth}{>{\bfseries}p{3.8cm}X}
+			Asignatura: & Ingeniería de Requerimientos (ISR-401)\\
+			Unidad: & Unidad IV --- Validación, gestión de requisitos y herramientas CASE\\
+			Proyecto PFC: & \sistema\\
+			Versión inicial del ERS: & v\versioners\\
+			Versión resultante: & \versionbaseline\\
+			Docente: & Ing. Gleiston Cicerón Guerrero Ulloa, PhD\\
+			Fecha de práctica: & \fechasesion\\
+		\end{tabularx}
+		
+		\vspace{0.8cm}
+		{\large\bfseries Integrantes y roles de inspección\par}
+		\vspace{0.25cm}
+	
+		\begin{tabularx}{\textwidth}{p{7.1cm}p{9.0cm}}
+			\toprule
+			\textbf{Integrante} & \textbf{Rol Fagan} \\
+			\midrule
+			Díaz Pontón Steven Santiago & Moderador / Inspector 1 \\
+			Vera Gómez Anthony Alfredo & Lector \\
+			Tigasi Sampedro Paul Alexander & Inspector 2 \\
+			\bottomrule
+		\end{tabularx}
+		
+		\vspace{0.8cm}
+		{\large\bfseries Votación del Change Control Board\par}
+		\vspace{0.25cm}
+		\begin{tabularx}{\textwidth}{p{4.2cm}p{3.2cm}p{2.0cm}X}
+			\toprule
+			\textbf{Integrante} & \textbf{Rol} & \textbf{Voto} & \textbf{Argumento clave} \\
+			\midrule
+			Vera Gómez Anthony Alfredo & Presidente CCB & Aprobado & Corrección documental de prioridad alta \\
+			Díaz Pontón Steven Santiago & Analista & Aprobado & RNF-08 ya está bien redactado en 4.5.4 \\
+			Tigasi Sampedro Paul Alexander & Desarrollador & Aprobado & No genera retrabajo de código \\
+			\bottomrule
+		\end{tabularx}
+		
+		\vfill
+		\noindent\textbf{Repositorio público:} \url{https://github.com/ptigasis-Alexander/MediCita_ISR401}
+		
+		\vspace{0.5cm}
+		Quevedo, Ecuador --- 2026
+	\end{titlepage}
+	
+	\pagenumbering{roman}
+	\tableofcontents
+	\listoftables
+	\listoffigures
+	\clearpage
+	\pagenumbering{arabic}
+	
+	% ======================= 1. RESUMEN ======================
+	\section{Resumen y objetivos}
+	\subsection{Resumen}
+	La práctica aplica validación formal, gestión del cambio, trazabilidad y control de configuración al ERS real de \sistema. El repositorio verificado contiene el ERS en \LaTeX, 40 requisitos funcionales, 18 requisitos no funcionales, modelos UML, mockups y una matriz de trazabilidad con 57 registros. La metodología exigida combina una inspección Fagan con preparación individual, consolidación de al menos 15 defectos, cálculo de cinco métricas y corrección del 100\,\% de defectos críticos y mayores. Posteriormente se tramitan tres solicitudes de cambio de distinta naturaleza mediante un CCB, se actualiza la trazabilidad bidireccional en una herramienta CASE y se establece una línea base coherente en Git. Finalmente se comparan herramientas CASE y los enfoques tradicional y ágil. Este documento distingue los resultados verificables del repositorio de los datos que solo pueden incorporarse después de ejecutar y firmar las sesiones del equipo. No se atribuyen a la práctica métricas, votos, capturas ni decisiones inexistentes.
+	
+	\subsection{Objetivo general}
+	Aplicar técnicas formales de validación y gestión de requisitos al ERS de \sistema, asegurando que sus cambios, relaciones de trazabilidad y línea base sean verificables, reproducibles y coherentes con los artefactos del PFC.
+	
+	\subsection{Objetivos específicos}
+	\begin{enumerate}
+		\item Ejecutar una inspección Fagan con los roles distribuidos entre los tres integrantes asignados por el docente.
+		\item Registrar, clasificar, medir e interpretar defectos del ERS; corregir todos los críticos y mayores.
+		\item Analizar tres RFC mediante la matriz de trazabilidad y documentar las decisiones del CCB.
+		\item Implementar trazabilidad bidireccional en Jira o Trello y exportar el backlog a CSV.
+		\item Publicar una línea base del ERS mediante commits semánticos, tag anotado y \texttt{CHANGELOG.md}.
+		\item Comparar herramientas CASE y contrastar la IR tradicional con la IR ágil a partir del caso SICM.
+	\end{enumerate}
+	
+	% =================== 2. FUNDAMENTO TEÓRICO ===============
+	\section{Fundamento teórico}
+	\subsection{Marco normativo}
+	La validación de requisitos se ubica en el proceso de ingeniería de requisitos de ISO/IEC/IEEE 29148:2018, particularmente en la sección 6.4, donde se exige comprobar que los requisitos representan las necesidades de los interesados y son adecuados para su uso previsto \cite{iso29148}. ISO/IEC/IEEE 15288:2023 sitúa la gestión de requisitos y la configuración dentro de los procesos técnicos del ciclo de vida de sistemas \cite{iso15288}; ISO/IEC/IEEE 12207:2017 hace lo propio para el ciclo de vida del software \cite{iso12207}.
+	
+	El ERS debe evaluarse también como artefacto de calidad. ISO/IEC 25010:2023 proporciona un modelo de calidad de producto que permite vincular requisitos no funcionales con propiedades como adecuación funcional, eficiencia, compatibilidad, usabilidad, fiabilidad, seguridad, mantenibilidad y portabilidad \cite{iso25010}. En SICM, estas características aparecen en requisitos cuantificados, entre ellos rendimiento de búsqueda, disponibilidad, control de acceso basado en roles e integridad de datos.
+	
+	SWEBOK v4.0 organiza las tareas de elicitación, análisis, especificación, validación y gestión de requisitos, y destaca la necesidad de mantener los requisitos durante su evolución \cite{swebok4}. Pohl diferencia la obtención, documentación, negociación, validación y gestión como actividades conectadas, no como etapas aisladas \cite{pohl2025}. El CCB constituye el mecanismo de gobernanza que evalúa el beneficio, costo, riesgo e impacto de un cambio antes de modificar una línea base; esta toma de decisiones se alinea con la gestión del cambio y de interesados del PMBOK \cite{pmbok7}.
+	
+	\subsection{Validación de requisitos}
+	La verificación pregunta si el artefacto fue construido correctamente respecto de reglas, formatos y criterios; la validación pregunta si los requisitos correctos representan la necesidad real del interesado \cite{iso29148,ireb31}. Ambas son necesarias: un requisito puede ser sintácticamente correcto y, aun así, expresar una necesidad equivocada.
+	
+	Las técnicas de validación incluyen revisiones, walkthroughs, prototipado, listas de verificación, lectura por perspectivas e inspecciones formales. La inspección Fagan se diferencia de una revisión informal porque asigna roles, exige preparación individual, registra defectos de forma estructurada y separa la detección de la corrección \cite{fagan1976}. Sus fases adaptadas al ERS son: planificación, preparación, reunión, corrección y seguimiento.
+	
+	Las propiedades inspeccionadas en SICM son ambigüedad, completitud, consistencia, verificabilidad, trazabilidad y factibilidad. Un ejemplo aplicado es la coexistencia de una regla que declara fusionado un requisito y otra sección que conserva el identificador como requisito autónomo: aunque cada párrafo se entienda por separado, el conjunto presenta un posible defecto de consistencia que debe ser confirmado por los inspectores.
+	
+	Las métricas mínimas de la guía se calculan así:
+	\begin{align}
+		D_d &= \frac{N_{defectos\ únicos}}{N_{páginas\ inspeccionadas}},\\
+		T_i &= \frac{N_{defectos\ detectados\ por\ inspector\ i}}{N_{defectos\ reportados\ en\ preparación}}\times 100,\\
+		T_c &= \frac{N_{defectos\ corregidos}}{N_{defectos\ que\ deben\ corregirse}}\times 100,\\
+		E_{HP} &= \sum_{i=1}^{n} horas_i.
+	\end{align}
+	La distribución por tipo y severidad se expresa como frecuencia y porcentaje. La métrica solo aporta valor cuando se interpreta: una densidad elevada puede indicar una sección inestable; una concentración de defectos de trazabilidad revela que el riesgo se traslada al análisis de impacto.
+	
+	\subsection{Gestión de requisitos}
+	La gestión de configuración identifica versiones controladas del ERS y de sus artefactos asociados. Una línea base es una versión aprobada que solo cambia mediante un procedimiento autorizado \cite{iso15288,iso12207}. Por ello, la versión de la portada, historial del ERS, \texttt{CHANGELOG.md} y tag de Git debe coincidir.
+	
+	Los atributos de un requisito ---identificador, fuente, prioridad, estado, versión, responsable y método de verificación--- permiten administrarlo durante el ciclo de vida \cite{wiegers2013}. La trazabilidad previa conecta una necesidad con su origen; la trazabilidad posterior enlaza el requisito con diseño, implementación y pruebas. La dirección hacia atrás permite justificar por qué existe el requisito, mientras que la dirección hacia adelante permite comprobar cómo será satisfecho \cite{gotel1994,cleland2012}.
+	
+	El proceso de cambio inicia con una RFC y continúa con análisis de impacto, deliberación del CCB, decisión, implementación, verificación y cierre. El impacto no se estima ``a ojo'': se recorre la matriz desde el requisito afectado hacia casos de uso, historias, criterios de aceptación, componentes, clases, mockups y pruebas. La volatilidad puede medirse mediante:
+	\begin{equation}
+		V_r=\frac{R_{añadidos}+R_{modificados}+R_{eliminados}}{R_{línea\ base}}\times100.
+	\end{equation}
+	
+	\subsection{Herramientas CASE para ingeniería de requisitos}
+	Las herramientas CASE pueden clasificarse en \textit{upper CASE}, orientadas a análisis, requisitos y modelado; \textit{lower CASE}, orientadas a construcción y pruebas; e integradas, que conectan varias etapas. Para la IR se espera repositorio de requisitos, atributos configurables, trazabilidad, control de cambios, baselines, colaboración, revisiones, reportes e integración con sistemas de versiones.
+	
+	Jira es flexible para backlog, flujos, campos y colaboración, aunque la trazabilidad formal requiere configuración o extensiones; su plan gratuito admite equipos pequeños \cite{jiraPricing}. IBM DOORS Next se orienta a gestión rigurosa y trazabilidad en contextos complejos. Jama Connect incorpora revisiones, aprobaciones, análisis de impacto, trazabilidad y auditoría \cite{jamaFeatures}. ReqView ofrece edición tabular, trazabilidad extremo a extremo, análisis de cobertura y exportación de informes, con almacenamiento compatible con Git \cite{reqviewOfficial}. La selección debe considerar complejidad, cumplimiento normativo, integración, costo y curva de aprendizaje.
+	
+	\subsection{Ingeniería de requisitos en procesos ágiles}
+	En un proceso ágil, el producto se organiza en épicas, historias de usuario, criterios de aceptación y tareas. Las historias expresan valor desde la perspectiva del usuario; los criterios delimitan cuándo se acepta el comportamiento \cite{cohn2004}. El refinamiento mantiene el backlog comprensible y priorizado. La \textit{Definition of Ready} establece las condiciones para iniciar una historia, mientras que la \textit{Definition of Done} fija la evidencia necesaria para considerarla terminada.
+	
+	BDD formula ejemplos ejecutables con la estructura Dado--Cuando--Entonces, conectando conversación, comportamiento esperado y prueba \cite{smart2014}. La agilidad no elimina la trazabilidad: cada historia debe conservar su origen y enlazarse con criterios, diseño, código y pruebas. La IR documental es apropiada cuando existe alta regulación, contratación formal o múltiples equipos; la IR ágil es eficaz cuando el producto necesita aprendizaje frecuente. Un enfoque híbrido resulta adecuado para SICM: ERS y controles formales para privacidad y seguridad, junto con backlog incremental para la construcción del MVP.
+	
+	% =================== 3. INSPECCIÓN FAGAN =================
+	\section{Inspección formal del ERS mediante Fagan}
+	\subsection{Objeto, versión y alcance}
+	El objeto inspeccionado es \texttt{01\_ERS/ERS\_v1.1.pdf}, versión vigente del SICM. El alcance registrado comprende las páginas 2--84, equivalentes a 83 páginas efectivas.
+	
+	La fecha registrada es 04/08/2026. La hora de inicio y fin debe copiarse del acta firmada antes de la entrega.
+	
+	\subsection{Roles}
+	\begin{table}[H]
+		\centering
+		\caption{Roles de la inspección Fagan}
+		\begin{tabularx}{\textwidth}{p{3.3cm}p{3.1cm}X}
+			\toprule
+			\textbf{Integrante} & \textbf{Rol} & \textbf{Responsabilidad}\\
+			\midrule
+			Steven Santiago Díaz Pontón & Moderador & Conduce, controla el tiempo y consolida defectos.\\
+			Anthony Alfredo Vera Gómez & Lector & Parafrasea el ERS y aporta su checklist individual.\\
+			Paul Alexander Tigasi Sampedro & Inspector y registrador & Inspecciona, reporta hallazgos y mantiene el registro consolidado.\\
+			\bottomrule
+		\end{tabularx}
+	\end{table}
+	
+	\subsection{Preparación individual}
+	Cada integrante dispone de un checklist individual con seis hallazgos, fecha, páginas, propiedad, requisito, evidencia y observación. El equipo está conformado por tres integrantes según la asignación docente: Steven desempeña la moderación, Anthony la lectura y Paul la inspección y el registro. Las firmas se incorporan en la sesión de evidencias.
+	
+	\begin{longtable}{p{0.8cm}p{2.0cm}p{4.5cm}p{2.1cm}p{1.6cm}p{2.3cm}}
+		\caption{Candidatos de inspección que el equipo debe validar}\label{tab:candidatos}\\
+		\toprule
+		\textbf{ID} & \textbf{Sección} & \textbf{Hallazgo verificable} & \textbf{Tipo sugerido} & \textbf{Severidad por decidir} & \textbf{Elemento}\\
+		\midrule\endfirsthead
+		\toprule
+		\textbf{ID} & \textbf{Sección} & \textbf{Hallazgo verificable} & \textbf{Tipo sugerido} & \textbf{Severidad por decidir} & \textbf{Elemento}\\
+		\midrule\endhead
+		C-01 & Portada/archivo & El nombre indica v1.0, pero el historial interno declara v3.1. & Consistencia & Validar & ERS\\
+		C-02 & README/ERS & El README enlaza un archivo v1.0 y lo declara completo, sin explicar la versión interna 3.1. & Trazabilidad & Validar & ERS/README\\
+		C-03 & RF-01/RF-14 & RF-01 declara fusionado RF-14, pero RF-14 permanece como requisito independiente. & Consistencia & Validar & RF-01, RF-14\\
+		C-04 & RF-15/RF-31 & RF-15 afirma que RF-31 se fusionó, pero RF-31 permanece en el catálogo. & Consistencia & Validar & RF-15, RF-31\\
+		C-05 & RF-15/RF-32 & RF-15 afirma que RF-32 se fusionó, pero RF-32 permanece en el catálogo. & Consistencia & Validar & RF-15, RF-32\\
+		C-06 & RF-18/RF-19 & RF-18 indica que RF-19 fue fusionado, pero RF-19 conserva ficha propia. & Consistencia & Validar & RF-18, RF-19\\
+		C-07 & RF-22/RF-33 & RF-22 declara fusionado RF-33, pero RF-33 permanece autónomo. & Consistencia & Validar & RF-22, RF-33\\
+		C-08 & RF-24/RF-25 & RF-24 declara fusionado RF-25, pero RF-25 conserva ficha propia. & Consistencia & Validar & RF-24, RF-25\\
+		C-09 & Matriz & Se referencian MU-30, MU-31 y MU-32, pero la carpeta de mockups verificada llega a MU-29. & Trazabilidad & Validar & RF-02, RF-11, RF-16\\
+		C-10 & Matriz fila 12 & RF-12 usa como evidencia ``EV-04'', pero no se muestra aquí el vínculo navegable al archivo fuente. & Trazabilidad & Validar & RF-12\\
+		C-11 & RNF & La numeración visible salta RNF-07 en varias tablas; debe confirmarse si está eliminado o ausente. & Completitud & Validar & RNF-07\\
+		C-12 & RNF-02 & Se observan metas distintas de disponibilidad en diferentes secciones (99\,\% y otras formulaciones). & Consistencia & Validar & RNF-02/RNF-09\\
+		C-13 & README & Las instrucciones existentes no documentan el proceso completo para compilar el informe PE4. & Reproducibilidad & Validar & README\\
+		C-14 & Git & No se encontró un tag anotado de baseline publicado. & Configuración & Validar & Repositorio\\
+		C-15 & PE4 & No existe la estructura 02\_Inspeccion, 03\_CCB y 05\_Informe exigida por la guía PE4. & Completitud & Validar & Repositorio\\
+		\bottomrule
+	\end{longtable}
+	
+	\subsection{Acta de reunión de inspección}
+	\begin{table}[H]
+		\centering
+		\caption{Acta resumida de la reunión Fagan}
+		\begin{tabularx}{\textwidth}{p{4.1cm}X}
+			\toprule
+			Fecha y estado & 04/08/2026; reunión Fagan realizada con asistencia completa del equipo\\
+			Asistentes y roles & Steven Díaz (moderador), Anthony Vera (lector) y Paul Tigasi (inspector y registrador)\\
+			Alcance & ERS v1.1; páginas efectivas consideradas: 2--84 (83 páginas)\\
+			Defectos preparados & Steven: 6; Anthony: 6; Paul: 6\\
+			Defectos únicos consolidados & 15 defectos aceptados y registrados en Jira\\
+			Críticos/mayores & 3 críticos, 10 mayores y 2 menores\\
+			Acuerdos & Durante la reunión se detectaron y clasificaron defectos; las soluciones se trataron después.\\
+			Evidencia & Checklists completados por los tres integrantes; incorporar las firmas y fotografías tomadas en el Anexo B\\
+			\bottomrule
+		\end{tabularx}
+	\end{table}
+	
+	\subsection{Registro consolidado y métricas}
+	El Anexo B actualizado consolida 15 defectos aceptados y corregidos. Jira registra los 15 en estado \textit{Listo}; la tasa de eliminación de defectos críticos y mayores alcanza el 100\,\%.
+	
+	\begin{table}[H]
+		\centering
+		\caption{Métricas obligatorias de inspección}
+		\begin{tabularx}{\textwidth}{p{4.1cm}p{3.2cm}X}
+			\toprule
+			\textbf{Métrica} & \textbf{Resultado real} & \textbf{Interpretación obligatoria}\\
+			\midrule
+			Densidad de defectos & 0,181 defectos/página (15/83) & Densidad moderada; los hallazgos se concentran en catálogo, criterios y trazabilidad.\\
+			Distribución por tipo & Ambigüedad 3; completitud 3; consistencia 3; trazabilidad 2; verificabilidad 2; factibilidad 2 & La debilidad es transversal.\\
+			Distribución por severidad & 3 críticos; 10 mayores; 2 menores & El 86,7\,\% fue crítico o mayor; todos esos defectos fueron corregidos antes de establecer la baseline.\\
+			Tasa por inspector & Steven 6; Anthony 6; Paul 3 consolidados & Paul preparó tres candidatos adicionales no consolidados.\\
+			Preparación individual & 3 de 3 checklists confirmados (100\,\%) & Todos los integrantes participaron en la revisión individual y en la reunión.\\
+			Tasa de corrección & 100\,\% de críticos/mayores y 100\,\% global & Los 15 defectos aceptados se corrigieron y se actualizaron en Jira.\\
+			\bottomrule
+		\end{tabularx}
+	\end{table}
+	
+	% ================ 4. CORRECCIONES =======================
+	\section{Correcciones aplicadas}
+	La Tabla siguiente resume el cambio aplicado a cada defecto crítico o mayor. El hash definitivo se completa después de subir los archivos al repositorio del grupo.
+	
+	\begin{longtable}{p{1.1cm}p{2.1cm}p{4.2cm}p{4.2cm}p{2.0cm}}
+		\caption{Trazabilidad de correcciones críticas y mayores}\\
+		\toprule
+		\textbf{ID} & \textbf{Requisito} & \textbf{Antes} & \textbf{Después} & \textbf{Commit}\\
+		\midrule\endfirsthead
+		\toprule
+		\textbf{ID} & \textbf{Requisito} & \textbf{Antes} & \textbf{Después} & \textbf{Commit}\\
+		\midrule\endhead
+		DEF-01 & ERS & Versión externa e interna diferentes & Nombre, portada e historial unificados como ERS v1.1 & \texttt{por registrar}\\
+		DEF-02 & RF-01/RF-14 & Identidad funcional duplicada & Alcances separados y referencias normalizadas & \texttt{por registrar}\\
+		DEF-04 & RF-15/RF-31/RF-32 & Fusiones sin identidad inequívoca & Catálogo y trazabilidad diferenciados & \texttt{por registrar}\\
+		DEF-05 & RF-18 & Tiempo sin evento ni entorno de medición & Se definieron inicio, observación, carga y criterio & \texttt{por registrar}\\
+		DEF-06 & RF-21 & Dependencia externa ajena al alcance & Se redefinió como comprobante interno sin servicios externos & \texttt{por registrar}\\
+		DEF-07 & RF-02 & Citas y orden de llegada sin prioridad & Se definieron modalidades, estados y prioridad & \texttt{por registrar}\\
+		DEF-08 & Modelado UML & Fuentes y exportaciones incompletas & Se documentaron formatos reproducibles y artefactos & \texttt{por registrar}\\
+		DEF-09 & RF-18/RF-19 & Requisitos fusionados pero activos & Se delimitó asignación y consulta de disponibilidad & \texttt{por registrar}\\
+		DEF-10 & RF-24 & Propagación sin escenario verificable & Se especificaron red, datos, carga y puntos de medición & \texttt{por registrar}\\
+		DEF-11 & RF-02 & Enlace al mockup inexistente MU-30 & La matriz enlaza RF-02 con el mockup existente MU-06 & \texttt{por registrar}\\
+		DEF-12 & RNF-14 & Compatibilidad sin inventario ni prueba & Prueba de humo de 30 min por equipo inventariado & \texttt{por registrar}\\
+		DEF-14 & RNF-18 & Validación descrita como pendiente sin protocolo & Se definieron dos rondas, participantes, evidencia y umbral & \texttt{por registrar}\\
+		DEF-15 & RF-22/RF-33 & Identidad funcional duplicada & Alcances de pago y habilitación operativa diferenciados & \texttt{por registrar}\\
+		\bottomrule
+	\end{longtable}
+	
+	% ================= 5. CCB Y RFC ==========================
+	\section{Gestión del cambio y Change Control Board}
+	\subsection{Criterio de selección de cambios}
+	Los tres RFC deben ser de naturaleza diferente y su impacto debe derivarse de la matriz. Los siguientes candidatos se relacionan con inconsistencias verificadas, pero solo se convierten en RFC oficiales cuando el equipo completa el Anexo C y el CCB delibera.
+	
+	\subsection{RFC-01 --- Alcance: completar la trazabilidad de mockups faltantes}
+	\begin{tabularx}{\textwidth}{p{4.2cm}X}
+		\toprule
+		ID / tipo & RFC-01 / Alcance\\
+		Solicitante / fecha & Anthony Alfredo Vera Gómez / 04/08/2026\\
+		Requisito afectado & RF-02, RF-11 y RF-16\\
+		Descripción & Crear o corregir los vínculos a MU-30, MU-31 y MU-32, o actualizar la matriz hacia los mockups realmente existentes.\\
+		Justificación & La matriz no debe apuntar a artefactos inexistentes porque impide verificar cobertura y análisis de impacto.\\
+		Impacto directo & Matriz, historias US-01/US-07, flujos de RF-16, documentación de mockups.\\
+		Impacto indirecto & Pruebas de agendamiento, notificaciones y asistente virtual; README de modelado.\\
+		Costo / riesgo & 6 horas-persona; riesgo bajo después de verificar los enlaces.\\
+		Recomendación técnica & Aprobar si el responsable confirma que los mockups faltan; alternativamente, corregir el identificador hacia el artefacto existente.\\
+		Decisión CCB & Aprobada por unanimidad (3 votos a favor).\\
+		\bottomrule
+	\end{tabularx}
+	
+	\subsection{RFC-02 --- Calidad: unificar disponibilidad y control de acceso}
+	\begin{tabularx}{\textwidth}{p{4.2cm}X}
+		\toprule
+		ID / tipo & RFC-02 / Calidad (RNF)\\
+		Solicitante / fecha & Paul Alexander Tigasi Sampedro / 04/08/2026\\
+		Requisito afectado & RNF-02, RNF-09, RNF-10 y requisitos de seguridad relacionados\\
+		Descripción & Eliminar formulaciones duplicadas o incompatibles y conservar una meta cuantificable por característica.\\
+		Justificación & Metas divergentes impiden diseñar una única prueba de aceptación y calcular cumplimiento.\\
+		Artefactos impactados & ERS, matriz, casos de prueba de disponibilidad, seguridad y auditoría.\\
+		Costo / riesgo & 8 horas-persona; riesgo medio por actualización transversal de pruebas.\\
+		Recomendación técnica & Aprobar con condición de preservar la exigencia legal y definir ambiente, periodo y método de medición.\\
+		Decisión CCB & Aprobada por unanimidad (3 votos a favor).\\
+		\bottomrule
+	\end{tabularx}
+	
+	\subsection{RFC-03 --- Restricción: coherencia de versión y baseline}
+	\begin{tabularx}{\textwidth}{p{4.2cm}X}
+		\toprule
+		ID / tipo & RFC-03 / Restricción y configuración\\
+		Solicitante / fecha & Paul Alexander Tigasi Sampedro / 04/08/2026\\
+		Requisito afectado & Configuración del ERS completo\\
+		Descripción & Renombrar el ERS para que la versión de archivo, portada, historial, \texttt{CHANGELOG.md} y tag coincidan.\\
+		Justificación & La falta de identidad unívoca de la versión impide reproducir la línea base aprobada.\\
+		Artefactos impactados & PDF, fuente \LaTeX, referencias del README, historial, CHANGELOG y enlaces.\\
+		Costo / riesgo & 3 horas-persona; riesgo bajo al ejecutarse después de las demás correcciones.\\
+		Recomendación técnica & Aprobar y ejecutar en un commit semántico dedicado antes de crear el tag.\\
+		Decisión CCB & Aprobada por unanimidad (3 votos a favor).\\
+		\bottomrule
+	\end{tabularx}
+	
+	\subsection{Acta del CCB}
+	\begin{table}[H]
+		\centering
+		\caption{Resumen de decisiones del CCB}
+		\begin{tabularx}{\textwidth}{p{1.7cm}p{2.7cm}X p{2.5cm}p{2.2cm}}
+			\toprule
+			\textbf{RFC} & \textbf{Decisión} & \textbf{Justificación motivada} & \textbf{Responsable} & \textbf{Plazo}\\
+			\midrule
+			RFC-01 & Aprobada & Corrige enlaces no verificables y restablece cobertura & Anthony Vera & 04/08/2026\\
+			RFC-02 & Aprobada & Unifica metas medibles de calidad y seguridad & Paul Tigasi & 04/08/2026\\
+			RFC-03 & Aprobada & Establece identidad única y reproducible de v1.1 & Steven Díaz & 04/08/2026\\
+			\bottomrule
+		\end{tabularx}
+	\end{table}
+	
+	La versión resultante del ERS será \versionbaseline. Esta versión debe repetirse sin diferencias en portada, historial, CHANGELOG y tag.
+	
+	% ================= 6. TRAZABILIDAD CASE ==================
+	\section{Trazabilidad en herramienta CASE}
+	\subsection{Estructura requerida}
+	El proyecto SICM fue creado en Jira con clave \texttt{SGICM}. La exportación contiene 89 elementos: 9 Epics, 40 Stories funcionales, 17 tareas no funcionales, 15 defectos y 8 tareas PE4. Supera los mínimos de Epics y Stories; todavía debe comprobarse que cinco historias tengan al menos dos sub-tareas de criterios de aceptación.
+	
+	Los campos mínimos son Prioridad MoSCoW y Fuente del requisito; se recomienda añadir Estado de verificación. Cada Story debe enlazar hacia atrás con stakeholder/evidencia y hacia adelante con caso de uso, módulo/clase y prueba.
+	
+	El archivo \texttt{04\_Trazabilidad/backlog\_export.csv} fue extraído de Jira el 04/08/2026 y contiene 89 issues en 11 columnas. Permanecen pendientes las capturas propias del tablero, tres issues y el panel estadístico.
+	
+	\subsection{Extracto de matriz de trazabilidad}
+	La matriz actualizada contiene 58 identificadores normalizados y enlaces hacia Jira. La Tabla~\ref{tab:matriz15} muestra quince vínculos reales seleccionados; deben compararse con el tablero y corregirse los enlaces huérfanos antes de la entrega.
+	
+	\begin{longtable}{p{2.4cm}p{1.4cm}p{1.5cm}p{3.0cm}p{2.2cm}p{2.0cm}}
+		\caption{Matriz mínima de trazabilidad del SICM}\label{tab:matriz15}\\
+		\toprule
+		\textbf{Stakeholder} & \textbf{RF} & \textbf{CU} & \textbf{Clase/Módulo} & \textbf{Prueba/CA} & \textbf{Fuente}\\
+		\midrule\endfirsthead
+		\toprule
+		\textbf{Stakeholder} & \textbf{RF} & \textbf{CU} & \textbf{Clase/Módulo} & \textbf{Prueba/CA} & \textbf{Fuente}\\
+		\midrule\endhead
+		Médico & RF-01 & CU-02 & Médico General & CA-01--03 & EV-01\\
+		Paciente & RF-02 & CU-01 & Paciente & CA-01--04 & EV-01/02\\
+		Médico & RF-03 & CU-02 & Médico General & CA-01--04 & EV-01\\
+		Médico & RF-04 & CU-03 & Médico General & CA-01--04 & EV-01\\
+		Médico & RF-05 & CU-02 & Médico General & CA-01--04 & EV-01\\
+		Paciente & RF-06 & CU-04 & Paciente & CA-01--04 & EV-01\\
+		Personal médico & RF-07 & CU-05 & Médico General & CA-01--03 & EV-04\\
+		Coordinación & RF-10 & CU-13 & Login/RBAC & CA-01--03 & EV-04\\
+		Paciente & RF-11 & CU-14 & Notificaciones & CA-01--04 & EV-02\\
+		Sistema & RF-12 & CU-15 & Auditoría & CA-01--03 & EV-04\\
+		Enfermería & RF-15 & CU-29 & Inventario & CA-01--02 & Entrevista\\
+		Paciente & RF-16 & Flujo RF-16 & Asistente IA & CA RF-16 & EV-01\\
+		Recepción/Recaudación & RF-21 & CU-18 & Recepción & CA-01--03 & Entrevista administrativa\\
+		Enfermería & RF-26 & CU-06 & Enfermería & CA-01--03 & EV-Enf-01\\
+		Recepción & RF-33 & CU-08 & Recepción & CA-01--03 & EV-Enf-01\\
+		\bottomrule
+	\end{longtable}
+	
+	% ================= 7. BASELINE GIT =======================
+	\section{Línea base y control de versiones con Git}
+	\subsection{Estado verificado del repositorio}
+
+	
+	\begin{table}[H]
+		\centering
+		\caption{Auditoría inicial del control de versiones}
+		\begin{tabularx}{\textwidth}{p{5.0cm}p{2.8cm}X}
+			\toprule
+			\textbf{Criterio} & \textbf{Estado} & \textbf{Acción PE4}\\
+			\midrule
+			Repositorio público & Cumple & Mantener URL en una sola línea en la carátula.\\
+			Mínimo 8 commits & Cumple globalmente & Crear commits PE4 distribuidos y semánticos.\\
+			Autoría de integrantes & Cumple globalmente & Verificar aporte específico a PE4.\\
+			Tag anotado publicado & No cumple & Crear y publicar después del CCB.\\
+			CHANGELOG por RFC & Parcial & Añadir una entrada por RFC aprobado.\\
+			README reproducible & Parcial & Añadir compilación exacta del informe PE4.\\
+			Estructura PE4 & No encontrada & Crear carpetas exigidas por la guía.\\
+			\bottomrule
+		\end{tabularx}
+	\end{table}
+	
+	\subsection{Comandos para establecer la línea base}
+	\begin{lstlisting}[style=terminal]
+		git add 01_ERS/ 03_CCB/ 04_Trazabilidad/ 05_Informe/ CHANGELOG.md README.md
+		git commit -m "docs(ers): aplicar cambios aprobados por CCB en PE4"
+		git tag -a baseline-vX.Y -m "Baseline aprobada por CCB"
+		git push origin main
+		git push origin baseline-vX.Y
+		git log --oneline --graph --decorate
+		git tag -n
+	\end{lstlisting}
+	El valor \texttt{vX.Y} debe sustituirse por la versión aprobada y coincidir en todos los artefactos. Las capturas de los dos últimos comandos se incluyen en el Anexo E.
+	
+	% ================= 8. COMPARATIVAS =======================
+	\section{Comparativa de herramientas CASE}
+	\begin{table}[H]
+		\centering
+		\caption{Comparación argumentada de herramientas CASE para IR}
+		\resizebox{\textwidth}{!}{%
+			\begin{tabular}{p{2.0cm}p{3.1cm}p{2.7cm}p{2.8cm}p{2.8cm}p{2.2cm}p{2.6cm}}
+				\toprule
+				\textbf{Herramienta} & \textbf{Funciones IR} & \textbf{Trazabilidad} & \textbf{Colaboración} & \textbf{Integración VCS} & \textbf{Costo} & \textbf{Curva}\\
+				\midrule
+				Jira & Backlog, flujos, campos y automatización; requiere configurar el modelo de requisitos. & Enlaces entre issues y campos; menos formal sin extensiones. & Alta para equipos ágiles. & Integración amplia con Bitbucket/GitHub. & Plan gratuito para equipo pequeño; planes superiores por usuario. & Media; conocida por el equipo.\\
+				IBM DOORS Next & Repositorio formal, atributos, baselines y gestión del ciclo de vida. & Muy sólida y apta para entornos regulados. & Revisiones y trabajo multiusuario. & Integración dentro del ecosistema IBM ELM. & Comercial empresarial. & Alta por administración y conceptos.\\
+				Jama Connect & Requisitos, revisiones, aprobaciones, riesgos, pruebas e impacto. & Extremo a extremo con auditoría y análisis de cambios. & Review Center y aprobaciones electrónicas. & API e integraciones con herramientas del ciclo de vida. & Comercial; cotización. & Media-alta.\\
+				ReqView & Requisitos tabulares, atributos, cobertura, impacto e informes. & Enlaces ascendentes y descendentes, detección de vínculos faltantes. & Colaboración basada en archivos/proyecto. & Compatible con repositorios Git. & Comercial con prueba; menor infraestructura. & Media-baja.\\
+				\bottomrule
+		\end{tabular}}
+	\end{table}
+	
+	Para SICM se recomienda Jira en PE4 porque el equipo necesita una solución accesible, colaborativa y suficiente para representar Epics, Stories, campos y enlaces. No obstante, la matriz CSV debe conservarse como control independiente y los campos deben configurarse rigurosamente; Jira no convierte automáticamente una lista de tareas en trazabilidad de requisitos. Para un despliegue clínico regulado y de mayor escala, Jama Connect o DOORS Next ofrecerían controles más especializados, pero su costo y curva no se justifican para el alcance académico actual.
+	
+	\section{Ingeniería de requisitos tradicional frente a ágil}
+	\begin{table}[H]
+		\centering
+		\caption{Contraste contextual entre IR tradicional y ágil}
+		\begin{tabularx}{\textwidth}{p{2.7cm}X X}
+			\toprule
+			\textbf{Dimensión} & \textbf{IR tradicional/documental} & \textbf{IR ágil}\\
+			\midrule
+			Documentación & ERS formal, versiones y aprobaciones; adecuada para auditoría. & Historias y ejemplos justo a tiempo; menor carga inicial.\\
+			Gestión del cambio & RFC, impacto y CCB antes de alterar baseline. & Refinamiento y repriorización frecuente del backlog.\\
+			Stakeholders & Hitos formales de revisión y aceptación. & Participación continua y retroalimentación iterativa.\\
+			Herramientas & ERS, matrices, CASE formal y control documental. & Tableros, BDD, pruebas y colaboración integrada.\\
+			Velocidad & Mayor inversión inicial; cambios más controlados. & Entrega temprana; respuesta rápida a aprendizaje.\\
+			Escalabilidad & Fuerte en sistemas regulados y contratos complejos. & Fuerte en productos evolutivos; requiere disciplina al escalar.\\
+			\bottomrule
+		\end{tabularx}
+	\end{table}
+	
+	SICM requiere un enfoque híbrido. La privacidad, seguridad, auditoría y tratamiento de datos de salud demandan especificación y control formal; las interfaces y flujos operativos pueden evolucionar mediante historias, criterios Gherkin y validación incremental con usuarios.
+	
+	% ================= 9. CONCLUSIONES =======================
+	\section{Conclusiones críticas}
+	\begin{enumerate}
+		\item La inspección no debe limitarse a corregir redacción: la auditoría inicial mostró que el principal riesgo del ERS está en la coherencia entre identificadores, fusiones declaradas y artefactos enlazados. El resultado final deberá confirmarse con el registro firmado y las métricas de la sesión.
+		\item La matriz existente proporciona una base amplia de 57 relaciones, pero los enlaces a mockups que no aparecen en el repositorio impiden afirmar cobertura completa. La trazabilidad solo es útil si el artefacto destino existe y puede abrirse.
+		\item La gestión del cambio aporta valor cuando el impacto se recorre desde la fuente hasta la prueba. En SICM, un ajuste de seguridad o disponibilidad afecta ERS, casos de uso, componentes, mockups y pruebas; una estimación aislada sería insuficiente.
+		\item El repositorio evidencia participación histórica de los cinco autores y supera ampliamente ocho commits, pero aún no existe una baseline PE4 verificable. El tag debe crearse después de la decisión del CCB, no como formalidad previa.
+		\item Jira es adecuado para la práctica por accesibilidad y colaboración, pero requiere campos y enlaces explícitos. El enfoque recomendado para SICM es híbrido: control documental para requisitos clínicos y legales, y gestión ágil para implementar y validar incrementos.
+	\end{enumerate}
+	
+	% ================= 10. DISTRIBUCIÓN ======================
+	\section{Distribución del trabajo}
+	La participación en la inspección y en la reunión quedó confirmada para los tres integrantes. Los hashes se incorporarán después de subir esta versión final al repositorio; el FAI se calculará únicamente con los commits de la PE4.
+	\begin{table}[H]
+		\centering
+		\caption{Aportes verificables por integrante}
+		\begin{tabularx}{\textwidth}{p{4.1cm}X p{3.0cm}}
+			\toprule
+			\textbf{Integrante} & \textbf{Aporte PE4} & \textbf{Commit/evidencia}\\
+			\midrule
+			Paul Alexander Tigasi Sampedro & Gestión de Jira, inspección técnica y trazabilidad & Pendiente de hash PE4\\
+			Steven Santiago Díaz Pontón & Moderación, revisión del ERS e informe & Pendiente de hash PE4\\
+			Anthony Alfredo Vera Gómez & Lectura, revisión de calidad y RFC & Pendiente de hash PE4\\
+			\bottomrule
+		\end{tabularx}
+	\end{table}
+	
+	% ================= 11. REFERENCIAS =======================
+	\clearpage
+	\addcontentsline{toc}{section}{Referencias}
+	\bibliographystyle{unsrt}
+	\bibliography{referencias_pe4}
+	
+	% ================= 12. ANEXOS ============================
+	\appendix
+	\section{Anexo A: listas de verificación individuales}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.85\textwidth]{AnexoA_Diaz.png}
+		\caption{Verifacion individual Checklist pag1.}
+
+	\end{figure}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.85\textwidth]{AnexoA_Diaz1.png}
+		\caption{Verifacion individual Checklist pag2.}
+		
+	\end{figure}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.85\textwidth]{AnexoA_Diaz2.png}
+		\caption{Verifacion individual Checklist pag3.}
+		
+	\end{figure}
+	
+	La demas evidencias de la lista de verificación individual se encuentran el repositorio.
+	
+	\section{Anexo B: registro de defectos y acta Fagan}
+
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=1.10\textwidth]{Defectos_Fagan.png}
+		\caption{Registro de defectos consolidados.}
+		
+	\end{figure}
+	
+	
+	
+	
+	\section{Anexo C: RFC y acta del CCB}
+
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=1.10\textwidth]{Acta_CCB-firma.png}
+		\caption{Acta firmada del Change control board.}
+		
+	\end{figure}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=1.10\textwidth]{Acta_CCB (2).png}
+		\caption{Acta firmada del Change control board.}
+		
+	\end{figure}
+	
+
+	
+	Las instancias de los formularios de la RFC se adjuntan completas en el repositorio. 
+	
+	\section{Anexo D: exportación CSV}
+
+	\begin{figure}[H]
+		
+	\centering
+		\includegraphics[width=1.10\textwidth]{Exportacion.png}
+		\caption{Acta firmada del Change control board.}
+	
+	\end{figure}
+	
+	\section{Anexo E: evidencias CASE y Git}
+	Insertar: tablero completo, tres issues con enlaces, panel estadístico, \texttt{git log --oneline --graph --decorate} y \texttt{git tag -n}. Todas las capturas deben mostrar proyecto y cuenta del equipo.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=1.10\textwidth]{Git_Code.png}
+		\caption{Acta firmada del Change control board.}
+		
+	\end{figure}
+	
+	\section{Anexo F: declaración de uso de inteligencia artificial}
+	\begin{table}[H]
+		\centering
+		\caption{Declaración transparente de asistencia con IA}
+		\begin{tabularx}{\textwidth}{p{3.5cm}X}
+			\toprule
+			Herramienta y versión & OpenAI ChatGPT/Codex, versión disponible el 4 de agosto de 2026.\\
+			Tarea asistida & Análisis de estructura de la guía, propuesta de organización \LaTeX, revisión preliminar del repositorio y apoyo de redacción.\\
+			Fragmentos afectados & Plantilla del informe, fundamento teórico, tablas comparativas, checklists, RFC, matriz, métricas y exportación estructurada del backlog.\\
+			Verificación crítica & El equipo debe contrastar cada afirmación con las normas citadas, el ERS, la matriz, los commits y las evidencias reales. Los candidatos no se convierten en defectos, RFC ni decisiones hasta ser validados y firmados por el equipo.\\
+			Limitaciones & La IA no participó en la sesión Fagan ni en el CCB, no produjo capturas auténticas y no puede firmar ni acreditar aportes.\\
+			Firmas &  Diaz Pontón Steven - Tigasi Sampedro Paúl - Vera Gomez Anthony\\
+			\bottomrule
+		\end{tabularx}
+	\end{table}
+	
+
+\end{document}
